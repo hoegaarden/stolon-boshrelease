@@ -1,0 +1,22 @@
+---
+name: stolon-sentinel
+
+templates:
+  ctl.erb: bin/ctl
+
+packages:
+- stolon
+
+properties:
+  stolon.clustername:
+    description: The stolon cluster's name
+    default: default_cluster
+  stolon.debug:
+    description: enable debug logging
+    default: true
+  stolon.backend:
+    description: store backend type (etcd or consul)
+    default: consul
+  stolon.initconf:
+    description: a file providing the initial cluster specification, used only at cluster initialization, ignored if cluster is already initialized
+

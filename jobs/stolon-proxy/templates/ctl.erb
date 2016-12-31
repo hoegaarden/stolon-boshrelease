@@ -1,0 +1,48 @@
+#!/bin/bash
+
+set -e
+set -u
+set -x
+
+NAME='stolon-proxy'
+PKG='stolon'
+
+RUN_DIR="/var/vcap/sys/run/${NAME}"
+LOG_DIR="/var/vcap/sys/log/${NAME}"
+PKG_DIR="/var/vcap/packages/${PKG}"
+JOB_DIR="/var/vcap/jobs/${NAME}"
+
+PIDFILE="${RUN_DIR}/pid"
+USER='vcap'
+GROUP='vcap'
+
+case $1 in
+
+  start)
+    mkdir -p "$RUN_DIR" "$LOG_DIR"
+    chown -R "${USER}:${GROUP}" "$RUN_DIR" "$LOG_DIR"
+
+    export PATH=$PKG_DIR:$PATH
+
+    echo $$ > "$PIDFILE"
+    exec chpst -u "${USER}:${GROUP}" \
+         "$NAME" \
+	 --cluster-name   <%= p('stolon.clustername') %> \
+	 --debug          <%= p('stolon.debug') %> \
+	 --port           <%= p('stolon.port') %> \
+	 --listen-address <%= p('stolon.addr') %> \
+	 --store-backend  <%= p('stolon.backend') %> \
+         >>  "${LOG_DIR}/${NAME}.stdout.log" \
+         2>> "${LOG_DIR}/${NAME}.stderr.log"
+    ;;
+
+  stop)
+    kill "$(cat "$PIDFILE")"
+    rm -f "$PIDFILE"
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac

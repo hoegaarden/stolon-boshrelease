@@ -1,0 +1,26 @@
+---
+name: stolon-proxy
+
+templates:
+  ctl.erb: bin/ctl
+
+packages:
+- stolon
+
+properties:
+  stolon.clustername:
+    description: The stolon cluster's name
+    default: default_cluster
+  stolon.debug:
+    description: enable debug logging
+    default: true
+  stolon.port:
+    description: proxy listening port
+    default: 5432
+  stolon.addr:
+    description: proxy listening address
+    default: 0.0.0.0
+  stolon.backend:
+    description: store backend type (etcd or consul)
+    default: consul
+

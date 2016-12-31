@@ -1,0 +1,5 @@
+---
+name: stolon
+
+files:
+- stolon/stolon-*.tar.gz

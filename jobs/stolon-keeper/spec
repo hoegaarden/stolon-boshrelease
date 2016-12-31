@@ -1,0 +1,41 @@
+---
+name: stolon-keeper
+
+templates:
+  ctl.erb: bin/ctl
+
+packages:
+- stolon
+- postgres-9.4.9
+
+properties:
+  stolon.clustername:
+    description: The stolon cluster's name
+    default: default_cluster
+  stolon.debug:
+    description: enable debug logging
+    default: true
+  stolon.backend:
+    description: store backend type (etcd or consul)
+    default: consul
+  pg.bin_path:
+    description: absolute path to postgresql binaries. If empty they will be searched in the current PATH
+    default: /var/vcap/packages/postgres-9.4.9/bin
+  pg.data_dir:
+    description: data directory
+    default: /var/vcap/store/stolon
+  pg.port:
+    description: postgresql instance listening port (default "5432")
+    default: 5432
+  pg.repl_user:
+    description: postgres replication user name. Required. It'll be created on db initialization. Requires --pg-repl-password or --pg-repl-passwordfile. Must be the same for all keepers.
+    default: stolon_repl
+  pg.repl_pass:
+    description: postgres replication user password. Required. Only one of --pg-repl-password or --pg-repl-passwordfile is required. Must be the same for all keepers.
+    default: some_repl_pass
+  pg.su_user:
+    description: postgres superuser user name. Used for keeper managed instance access and pg_rewind based synchronization. It'll be created on db initialization. Defaults to the name of the effective user running stolon-keeper. Must be the same for all keepers. (default "$USER")
+    default: postgres
+  pg.su_pass:
+    description: postgres superuser password. Needed for pg_rewind based synchronization. If provided it'll be configured on db initialization. Only one of --pg-su-password or --pg-su-passwordfile is required. Must be the same for all keepers.
+    default: some_su_pass

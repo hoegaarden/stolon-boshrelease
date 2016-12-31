@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+set -e
+set -u
+set -x
+
+ARCHIVE="stolon/stolon-*.tar.gz"
+
+test -e $ARCHIVE
+
+# get all stolon binaries out of the archive and
+# extract them to $BOSH_INSTALL_TARGET
+# For now those are:
+# - stolonctl
+# - stolon-proxy
+# - stolon-keeper
+# - stolon-sentinel
+tar \
+    -v \
+    --strip-component=1 \
+    --no-wildcards-match-slash \
+    --wildcards \
+    -C "$BOSH_INSTALL_TARGET" \
+    -xzf \
+    $ARCHIVE \
+    '*/stolon*'

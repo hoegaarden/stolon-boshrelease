@@ -1,0 +1,4 @@
+check process stolon-proxy
+  with pidfile  '/var/vcap/sys/run/stolon-proxy/pid'
+  start program "/var/vcap/jobs/stolon-proxy/bin/ctl start"
+  stop program  "/var/vcap/jobs/stolon-proxy/bin/ctl stop"

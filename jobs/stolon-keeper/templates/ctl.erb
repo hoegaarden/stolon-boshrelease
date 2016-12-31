@@ -1,0 +1,55 @@
+#!/bin/bash
+
+set -e
+set -u
+set -x
+
+NAME='stolon-keeper'
+PKG='stolon'
+
+RUN_DIR="/var/vcap/sys/run/${NAME}"
+LOG_DIR="/var/vcap/sys/log/${NAME}"
+PKG_DIR="/var/vcap/packages/${PKG}"
+JOB_DIR="/var/vcap/jobs/${NAME}"
+
+PIDFILE="${RUN_DIR}/pid"
+USER='vcap'
+GROUP='vcap'
+
+DATA_DIR='<%= p('pg.data_dir') %>'
+
+case $1 in
+
+  start)
+    mkdir -p "$RUN_DIR" "$LOG_DIR" "$DATA_DIR"
+    chown -R "${USER}:${GROUP}" "$RUN_DIR" "$LOG_DIR" "$DATA_DIR"
+
+    export PATH=$PKG_DIR:<%= p('pg.bin_path') %>:$PATH
+
+    echo $$ > "$PIDFILE"
+    exec chpst -u "${USER}:${GROUP}" \
+         "$NAME" \
+	 --pg-listen-address    <%= spec.address %> \
+	 --cluster-name         <%= p('stolon.clustername') %> \
+	 --debug                <%= p('stolon.debug') %> \
+	 --store-backend        <%= p('stolon.backend') %> \
+	 --data-dir             <%= p('pg.data_dir') %> \
+	 --pg-port              <%= p('pg.port') %> \
+	 --pg-repl-password     <%= p('pg.repl_pass') %> \
+	 --pg-repl-username     <%= p('pg.repl_user') %> \
+	 --pg-su-password       <%= p('pg.su_pass') %> \
+	 --pg-su-username       <%= p('pg.su_user') %> \
+         >>  "${LOG_DIR}/${NAME}.stdout.log" \
+         2>> "${LOG_DIR}/${NAME}.stderr.log"
+    ;;
+
+  stop)
+    kill "$(cat "$PIDFILE")"
+    rm -f "$PIDFILE"
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac

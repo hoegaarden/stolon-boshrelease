@@ -1,0 +1,4 @@
+check process stolon-keeper
+  with pidfile  '/var/vcap/sys/run/stolon-keeper/pid'
+  start program "/var/vcap/jobs/stolon-keeper/bin/ctl start"
+  stop program  "/var/vcap/jobs/stolon-keeper/bin/ctl stop"

@@ -1,0 +1,4 @@
+check process stolon-sentinel
+  with pidfile  '/var/vcap/sys/run/stolon-sentinel/pid'
+  start program "/var/vcap/jobs/stolon-sentinel/bin/ctl start"
+  stop program  "/var/vcap/jobs/stolon-sentinel/bin/ctl stop"
