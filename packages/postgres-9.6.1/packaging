@@ -2,7 +2,7 @@
 
 function main() {
   local pgversion
-  pgversion="postgresql-9.4.9"
+  pgversion="postgresql-9.6.1"
 
   extract_archive "${pgversion}"
   compile "${pgversion}"
@@ -14,7 +14,7 @@ function extract_archive() {
   pgversion="${1}"
 
   local archive
-  archive="${pgversion}.tar.gz"
+  archive="${pgversion}.tar.bz2"
 
   if [[ -f "postgres/${archive}" ]] ; then
     echo "Archive found"
@@ -24,7 +24,7 @@ function extract_archive() {
   fi
 
   echo "Extracting archive..."
-  tar xzf "postgres/${archive}"
+  tar xjf "postgres/${archive}"
 
 }
 

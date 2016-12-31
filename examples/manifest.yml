@@ -23,6 +23,8 @@ properties:
   consul:
     server: false
     join_hosts: *cips
+  pg:
+    default_lang: "en_US.utf8"
 
 resource_pools:
 - name: default

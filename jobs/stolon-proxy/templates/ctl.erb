@@ -27,11 +27,11 @@ case $1 in
     echo $$ > "$PIDFILE"
     exec chpst -u "${USER}:${GROUP}" \
          "$NAME" \
-	 --cluster-name   <%= p('stolon.clustername') %> \
-	 --debug          <%= p('stolon.debug') %> \
-	 --port           <%= p('stolon.port') %> \
-	 --listen-address <%= p('stolon.addr') %> \
-	 --store-backend  <%= p('stolon.backend') %> \
+         <% if_p('stolon.debug') do |p| %>--debug<% end %> \
+         --cluster-name   "<%= p('stolon.clustername') %>" \
+         --port           "<%= p('stolon.port') %>" \
+         --listen-address "<%= p('stolon.addr') %>" \
+         --store-backend  "<%= p('stolon.backend') %>" \
          >>  "${LOG_DIR}/${NAME}.stdout.log" \
          2>> "${LOG_DIR}/${NAME}.stderr.log"
     ;;

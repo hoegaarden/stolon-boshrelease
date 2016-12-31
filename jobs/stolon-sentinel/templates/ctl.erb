@@ -24,15 +24,15 @@ case $1 in
 
     export PATH=$PKG_DIR:$PATH
 
+    CSPEC="${JOB_DIR}/config/cluster.spec.json"
+
     echo $$ > "$PIDFILE"
     exec chpst -u "${USER}:${GROUP}" \
          "$NAME" \
-	 --cluster-name         <%= p('stolon.clustername') %> \
-	 --debug                <%= p('stolon.debug') %> \
-	 --store-backend        <%= p('stolon.backend') %> \
-	 <% if_p('stolon.initconf') do |p| %>
-         --initial-cluster-spec <%= p %> \
-	 <% end %> \
+         <% if_p('stolon.debug') do |p| %>--debug<% end %> \
+         --cluster-name         "<%= p('stolon.clustername') %>" \
+         --store-backend        "<%= p('stolon.backend') %>" \
+         --initial-cluster-spec "$CSPEC" \
          >>  "${LOG_DIR}/${NAME}.stdout.log" \
          2>> "${LOG_DIR}/${NAME}.stderr.log"
     ;;

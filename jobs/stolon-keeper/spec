@@ -6,7 +6,7 @@ templates:
 
 packages:
 - stolon
-- postgres-9.4.9
+- postgres-9.6.1
 
 properties:
   stolon.clustername:
@@ -14,13 +14,14 @@ properties:
     default: default_cluster
   stolon.debug:
     description: enable debug logging
-    default: true
   stolon.backend:
     description: store backend type (etcd or consul)
     default: consul
+  pg.default_lang:
+    description: which $LANG should be exported for stolon/postgres
   pg.bin_path:
     description: absolute path to postgresql binaries. If empty they will be searched in the current PATH
-    default: /var/vcap/packages/postgres-9.4.9/bin
+    default: /var/vcap/packages/postgres-9.6.1/bin
   pg.data_dir:
     description: data directory
     default: /var/vcap/store/stolon

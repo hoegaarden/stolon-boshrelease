@@ -1,0 +1,18 @@
+<%
+require 'json'
+
+pg_params = {
+  # some default params?
+}
+
+pg_params.merge!(
+  p('pg.params', {})
+)
+%>
+
+<%=
+JSON.pretty_generate({
+  initMode:     "new",
+  pgParameters: pg_params,
+})
+%>

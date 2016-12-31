@@ -2,7 +2,8 @@
 name: stolon-sentinel
 
 templates:
-  ctl.erb: bin/ctl
+  ctl.erb:               bin/ctl
+  cluster.spec.json.erb: config/cluster.spec.json
 
 packages:
 - stolon
@@ -13,10 +14,19 @@ properties:
     default: default_cluster
   stolon.debug:
     description: enable debug logging
-    default: true
   stolon.backend:
     description: store backend type (etcd or consul)
     default: consul
-  stolon.initconf:
-    description: a file providing the initial cluster specification, used only at cluster initialization, ignored if cluster is already initialized
-
+  pg.params:
+    description: additional parameters to pass to postgres
+    default:
+      logging_collector:        "on"
+      log_directory:            "/var/vcap/sys/log/stolon-keeper"
+      log_filename:             "postgresql-%Y-%m-%d.log"
+      log_truncate_on_rotation: "on"
+      log_rotation_age:         "1440"
+      TimeZone:                 "UTC"
+      log_timezone:             "UTC"
+      log_disconnections:       "on"
+      log_line_prefix:          "%t [%p-%l] %q%u@%d "
+      log_replication_commands: "off"

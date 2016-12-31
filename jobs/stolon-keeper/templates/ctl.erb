@@ -26,19 +26,23 @@ case $1 in
 
     export PATH=$PKG_DIR:<%= p('pg.bin_path') %>:$PATH
 
+  <% if_p('pg.default_lang') do |lang| %>
+    export LANG='<%= lang %>'
+  <% end %>
+
     echo $$ > "$PIDFILE"
     exec chpst -u "${USER}:${GROUP}" \
          "$NAME" \
-	 --pg-listen-address    <%= spec.address %> \
-	 --cluster-name         <%= p('stolon.clustername') %> \
-	 --debug                <%= p('stolon.debug') %> \
-	 --store-backend        <%= p('stolon.backend') %> \
-	 --data-dir             <%= p('pg.data_dir') %> \
-	 --pg-port              <%= p('pg.port') %> \
-	 --pg-repl-password     <%= p('pg.repl_pass') %> \
-	 --pg-repl-username     <%= p('pg.repl_user') %> \
-	 --pg-su-password       <%= p('pg.su_pass') %> \
-	 --pg-su-username       <%= p('pg.su_user') %> \
+         <% if_p('stolon.debug') do |p| %>--debug<% end %> \
+         --pg-listen-address    "<%= spec.address %>" \
+         --cluster-name         "<%= p('stolon.clustername') %>" \
+         --store-backend        "<%= p('stolon.backend') %>" \
+         --data-dir             "<%= p('pg.data_dir') %>" \
+         --pg-port              "<%= p('pg.port') %>" \
+         --pg-repl-password     "<%= p('pg.repl_pass') %>" \
+         --pg-repl-username     "<%= p('pg.repl_user') %>" \
+         --pg-su-password       "<%= p('pg.su_pass') %>" \
+         --pg-su-username       "<%= p('pg.su_user') %>" \
          >>  "${LOG_DIR}/${NAME}.stdout.log" \
          2>> "${LOG_DIR}/${NAME}.stderr.log"
     ;;
@@ -46,7 +50,6 @@ case $1 in
   stop)
     kill "$(cat "$PIDFILE")"
     rm -f "$PIDFILE"
-
     ;;
 
   *)

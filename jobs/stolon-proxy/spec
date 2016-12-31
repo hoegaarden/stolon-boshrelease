@@ -13,7 +13,6 @@ properties:
     default: default_cluster
   stolon.debug:
     description: enable debug logging
-    default: true
   stolon.port:
     description: proxy listening port
     default: 5432
