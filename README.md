@@ -11,7 +11,6 @@ This is a [bosh release](https://bosh.io) using [postgres](https://www.postgresq
 
 ## TODOs
 
-- [ ] upload blobs to S3
 - [ ] More testing, smoketest, CI
 - [ ] test with `pg_rewind`
 - [ ] include some backup solution (`wal-e`, `pgbackrest`, `barman`, ...)

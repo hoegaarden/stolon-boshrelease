@@ -1,0 +1,8 @@
+---
+name: postgres
+
+dependencies: []
+
+files:
+  - postgres/**/*
+

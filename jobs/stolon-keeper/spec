@@ -6,7 +6,7 @@ templates:
 
 packages:
 - stolon
-- postgres-9.6.1
+- postgres
 
 properties:
   stolon.clustername:
@@ -21,7 +21,7 @@ properties:
     description: which $LANG should be exported for stolon/postgres
   pg.bin_path:
     description: absolute path to postgresql binaries. If empty they will be searched in the current PATH
-    default: /var/vcap/packages/postgres-9.6.1/bin
+    default: /var/vcap/packages/postgres/bin
   pg.data_dir:
     description: data directory
     default: /var/vcap/store/stolon

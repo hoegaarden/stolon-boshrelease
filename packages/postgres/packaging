@@ -1,38 +1,8 @@
 #!/bin/bash -exu
 
-function main() {
-  local pgversion
-  pgversion="postgresql-9.6.1"
-
-  extract_archive "${pgversion}"
-  compile "${pgversion}"
-
-}
-
-function extract_archive() {
-  local pgversion
-  pgversion="${1}"
-
-  local archive
-  archive="${pgversion}.tar.bz2"
-
-  if [[ -f "postgres/${archive}" ]] ; then
-    echo "Archive found"
-  else
-    echo "Archive not found"
-    exit 1
-  fi
-
-  echo "Extracting archive..."
-  tar xjf "postgres/${archive}"
-
-}
-
 function compile() {
-  local pgversion
-  pgversion="${1}"
+  pushd "postgres" >/dev/null
 
-  pushd "${pgversion}" > /dev/null
     if [[ "$(uname -a)" =~ "x86_64" || "$(uname -a)" =~ "ppc64le" ]] ; then
       ./configure --prefix="${BOSH_INSTALL_TARGET}"
     else
@@ -59,7 +29,9 @@ function compile() {
       make
       make install
     popd > /dev/null
-  popd > /dev/null
+  
+  popd >/dev/null
 }
 
-main
+compile
+  

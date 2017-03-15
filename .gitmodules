@@ -1,0 +1,7 @@
+[submodule "src/postgres"]
+	path = src/postgres
+	url = https://github.com/postgres/postgres
+	branch = REL9_6_STABLE
+[submodule "src/stolon"]
+	path = src/stolon
+	url = https://github.com/sorintlab/stolon

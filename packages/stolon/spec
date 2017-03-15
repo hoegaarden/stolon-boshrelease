@@ -1,5 +1,8 @@
 ---
 name: stolon
 
+dependencies:
+- golang1.7
+
 files:
-- stolon/stolon-*.tar.gz
+- stolon/**/*

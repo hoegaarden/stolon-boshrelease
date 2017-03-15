@@ -1,7 +1,8 @@
 ---
 
 name: stolon
-director_uuid: fb70f16a-4d6f-41f8-bc2e-0181a03dff18
+director_uuid: 63ddb6a6-d6fe-40e1-b16b-2ff6b2034c79
+# director_uuid: fb70f16a-4d6f-41f8-bc2e-0181a03dff18
 
 releases:
 - name: stolon
