@@ -1,0 +1,8 @@
+---
+consul_client_link_name: consul_client_link
+consul_common_link_name: consul_common_link
+consul_deployment_name: consul
+
+stolon_keeper_instances: 3
+stolon_sentinel_instances: 2
+stolon_proxy_instances: 1

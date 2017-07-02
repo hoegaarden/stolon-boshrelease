@@ -1,0 +1,52 @@
+---
+- type: remove
+  path: /instance_groups/name=keeper/jobs/name=consul_agent/consumes/consul_common/deployment
+
+- type: remove
+  path: /instance_groups/name=keeper/jobs/name=consul_agent/consumes/consul_client/deployment
+
+- type: remove
+  path: /instance_groups/name=proxy/jobs/name=consul_agent/consumes/consul_common/deployment
+
+- type: remove
+  path: /instance_groups/name=proxy/jobs/name=consul_agent/consumes/consul_client/deployment
+
+- type: remove
+  path: /instance_groups/name=sentinel/jobs/name=consul_agent/consumes/consul_common/deployment
+
+- type: remove
+  path: /instance_groups/name=sentinel/jobs/name=consul_agent/consumes/consul_client/deployment
+
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: consul
+    jobs:
+    - name: consul_agent
+      release: consul
+      provides:
+        consul_server: { as: ((consul_server_link_name)) }
+        consul_common: { as: ((consul_common_link_name)) }
+        consul_client: { as: ((consul_client_link_name)) }
+      consumes:
+        consul_server: { from: ((consul_server_link_name)) }
+        consul_client: { from: ((consul_client_link_name)) }
+        consul_common: { from: ((consul_common_link_name)) }
+      properties:
+        consul:
+          agent:
+            mode: server
+            domain: ((consul_domain))
+          encrypt_keys: ((consul_encrypt_keys))
+          server_cert: ((consul_server_cert))
+          server_key: ((consul_server_key))
+          ca_cert: ((consul_ca_cert))
+          agent_cert: ((consul_agent_cert))
+          agent_key: ((consul_agent_key))
+    networks:
+    - name: default
+    instances: ((consul_instances))
+    vm_type: default
+    stemcell: default
+    azs: [ z1, z2, z3 ]
+

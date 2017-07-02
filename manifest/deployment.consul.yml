@@ -1,0 +1,57 @@
+---
+name: consul
+
+releases:
+- name: consul
+  version: 170
+
+instance_groups:
+- name: consul
+  jobs:
+  - name: consul_agent
+    release: consul
+    provides:
+      consul_server:
+        as: ((consul_server_link_name))
+      consul_common:
+        as: ((consul_common_link_name))
+        shared: true
+      consul_client:
+        as: ((consul_client_link_name))
+        shared: true
+    consumes:
+      consul_server: { from: ((consul_server_link_name)) }
+      consul_client: { from: ((consul_client_link_name)) }
+      consul_common: { from: ((consul_common_link_name)) }
+    properties:
+      consul:
+        agent:
+          mode: server
+          domain: ((consul_domain))
+        encrypt_keys: ((consul_encrypt_keys))
+        server_cert: ((consul_server_cert))
+        server_key: ((consul_server_key))
+        ca_cert: ((consul_ca_cert))
+        agent_cert: ((consul_agent_cert))
+        agent_key: ((consul_agent_key))
+  networks:
+  - name: default
+  instances: ((consul_instances))
+  vm_type: default
+  stemcell: default
+  azs: [ z1, z2, z3 ]
+
+
+update:
+  canaries: 1
+  canary_watch_time: 60000
+  update_watch_time: 60000
+  max_in_flight: 2
+  resource_pool: default
+  networks:
+   - name: default
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
