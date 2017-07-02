@@ -1,0 +1,9 @@
+set -eu
+
+BLOB_NAME='golang1.8/golang1.8.3.tar.gz'
+
+tar \
+  -C "$BOSH_INSTALL_TARGET" \
+  --strip-components=1 \
+  -xzf "$BLOB_NAME"
+

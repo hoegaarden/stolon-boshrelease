@@ -4,7 +4,7 @@ set -e
 set -u
 set -x
 
-export GOROOT=$(readlink -nf /var/vcap/packages/golang1.7)
+export GOROOT=$(readlink -nf /var/vcap/packages/golang1.8)
 export PATH=$GOROOT/bin:$PATH
 
 pushd stolon >/dev/null

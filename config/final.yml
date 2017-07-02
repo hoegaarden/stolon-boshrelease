@@ -1,5 +1,2 @@
 ---
-blobstore:
-  provider: s3
-  options:
-    bucket_name: cf-release-blobs
+name: stolon
