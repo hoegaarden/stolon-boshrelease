@@ -39,10 +39,10 @@ case $1 in
          --store-backend        "<%= p('stolon.backend') %>" \
          --data-dir             "<%= p('pg.data_dir') %>" \
          --pg-port              "<%= p('pg.port') %>" \
-         --pg-repl-password     "<%= p('pg.repl_pass') %>" \
          --pg-repl-username     "<%= p('pg.repl_user') %>" \
-         --pg-su-password       "<%= p('pg.su_pass') %>" \
          --pg-su-username       "<%= p('pg.su_user') %>" \
+         --pg-repl-passwordfile "${JOB_DIR}/.pass.repl" \
+         --pg-su-passwordfile   "${JOB_DIR}/.pass.su" \
          >>  "${LOG_DIR}/${NAME}.stdout.log" \
          2>> "${LOG_DIR}/${NAME}.stderr.log"
     ;;

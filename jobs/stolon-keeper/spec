@@ -2,7 +2,9 @@
 name: stolon-keeper
 
 templates:
-  ctl.erb: bin/ctl
+  ctl.erb:       bin/ctl
+  pass_su.erb:   .pass.su
+  pass_repl.erb: .pass.repl
 
 packages:
 - stolon
