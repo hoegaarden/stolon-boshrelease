@@ -1,0 +1,15 @@
+---
+name: smoke-tests
+
+templates:
+  main.sh: bin/run
+
+packages:
+- postgres
+
+consumes:
+- name: users
+  type: pg_users
+- name: conn
+  type: pg_conn
+

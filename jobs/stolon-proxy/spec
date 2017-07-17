@@ -6,6 +6,13 @@ templates:
 
 packages:
 - stolon
+- bosh-helpers
+
+provides:
+- name: pg
+  type: pg_conn
+  properties:
+  - stolon.port
 
 properties:
   stolon.clustername:
